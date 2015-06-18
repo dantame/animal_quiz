@@ -3,6 +3,7 @@ require_relative 'question'
 require_relative 'animal'
 require_relative 'animal_list'
 require_relative 'question_list'
+require_relative 'console'
 
 module AnimalQuiz
   class Main
@@ -43,8 +44,8 @@ module AnimalQuiz
 
     private
     def ask_question q
-      puts q.question
-      answer = gets.chomp
+      AnimalQuiz::Console.write q.question
+      answer = AnimalQuiz::Console.read
 
       return win_game if answer == 'y' && @possible_animals.length == 1
       return poll_user_for_information if answer == 'n' && @possible_animals.length <= 1
@@ -71,18 +72,18 @@ module AnimalQuiz
 
     private
     def win_game
-      puts "I guessed your animal! It's a #{@possible_animals[0].name}!"
+      AnimalQuiz::Console.write "I guessed your animal! It's a #{@possible_animals[0].name}!"
       restart
     end
 
     private
     def poll_user_for_information
-      puts "Looks like I couldn't find the animal you were thinking of, what was it?"
-      animal_name = gets.chomp
-      puts 'Could you tell me some properties of this animal? e.g tall, long, flying'
-      properties_list = gets.chomp.split(',')
-      puts 'What question would you ask someone who was thinking of this animal?'
-      question_text = gets.chomp
+      AnimalQuiz::Console.write "Looks like I couldn't find the animal you were thinking of, what was it?"
+      animal_name = AnimalQuiz::Console.read
+      AnimalQuiz::Console.write 'Could you tell me some properties of this animal? e.g tall, long, flying'
+      properties_list = AnimalQuiz::Console.read.split(',')
+      AnimalQuiz::Console.write 'What question would you ask someone who was thinking of this animal?'
+      question_text = AnimalQuiz::Console.read
 
       add_to_database animal_name, properties_list, question_text
 
@@ -103,8 +104,8 @@ module AnimalQuiz
     end
 
     def restart
-      puts 'Would you like to play again?'
-      play_again = gets.chomp
+      AnimalQuiz::Console.write 'Would you like to play again?'
+      play_again = AnimalQuiz::Console.read
 
       reset if play_again == 'y'
     end
