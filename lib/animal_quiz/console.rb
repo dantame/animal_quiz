@@ -1,10 +1,10 @@
 module AnimalQuiz
     class Console
-        def self.read
+        def read
           gets.chomp
         end
 
-        def self.write msg
+        def write msg
           puts msg
         end
     end

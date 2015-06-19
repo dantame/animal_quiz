@@ -8,7 +8,11 @@ require_relative 'console'
 module AnimalQuiz
   class Main
 
-    def initialize
+    attr_reader :console
+
+    def initialize console
+
+      @console = console
       @confirmed_props = []
       @rejected_props = []
 
@@ -44,8 +48,8 @@ module AnimalQuiz
 
     private
     def ask_question q
-      AnimalQuiz::Console.write q.question
-      answer = AnimalQuiz::Console.read
+      @console.write q.question
+      answer = @console.read
 
       return win_game if answer == 'y' && @possible_animals.length == 1
       return poll_user_for_information if answer == 'n' && @possible_animals.length <= 1
@@ -72,18 +76,18 @@ module AnimalQuiz
 
     private
     def win_game
-      AnimalQuiz::Console.write "I guessed your animal! It's a #{@possible_animals[0].name}!"
+      @console.write "I guessed your animal! It's a #{@possible_animals[0].name}!"
       restart
     end
 
     private
     def poll_user_for_information
-      AnimalQuiz::Console.write "Looks like I couldn't find the animal you were thinking of, what was it?"
-      animal_name = AnimalQuiz::Console.read
-      AnimalQuiz::Console.write 'Could you tell me some properties of this animal? e.g tall, long, flying'
-      properties_list = AnimalQuiz::Console.read.split(',')
-      AnimalQuiz::Console.write 'What question would you ask someone who was thinking of this animal?'
-      question_text = AnimalQuiz::Console.read
+      @console.write "Looks like I couldn't find the animal you were thinking of, what was it?"
+      animal_name = @console.read
+      @console.write 'Could you tell me some properties of this animal? e.g tall, long, flying'
+      properties_list = @console.read.split(',')
+      @console.write 'What question would you ask someone who was thinking of this animal?'
+      question_text = @console.read
 
       add_to_database animal_name, properties_list, question_text
 
@@ -104,8 +108,8 @@ module AnimalQuiz
     end
 
     def restart
-      AnimalQuiz::Console.write 'Would you like to play again?'
-      play_again = AnimalQuiz::Console.read
+      @console.write 'Would you like to play again?'
+      play_again = @console.read
 
       reset if play_again == 'y'
     end
