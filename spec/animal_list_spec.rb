@@ -30,7 +30,7 @@ describe AnimalQuiz::AnimalList do
 
   it 'adds an animal to the list' do
     subject.add(mammoth)
-    expect(subject.animals).to eq([elephant, mouse, mammoth])
+    expect(subject.animals).to include(elephant, mouse, mammoth)
   end
 
 end

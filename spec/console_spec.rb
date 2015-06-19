@@ -10,12 +10,4 @@ describe AnimalQuiz::Console do
     expect { subject.write(msg) }.to output("#{msg}\n").to_stdout
   end
 
-  it 'receives a msg from stdin' do
-    msg = 'test'
-
-    allow(STDIN).to receive(:gets).and_return(msg)
-
-    expect(subject.read).to eq(msg)
-  end
-
 end
